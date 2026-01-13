@@ -14,3 +14,9 @@ dist_df.write.mode("overwrite").format("orc").partitionBy("department").save("/u
 
 # Mean salary by department
 df1 = (dist_df.groupBy("department").agg(avg(col("salary")).alias("mean_salary")).orderBy(col("department").desc()))
+
+# Output verification
+df1.show()
+
+spark.stop()
+
