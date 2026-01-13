@@ -12,3 +12,7 @@ if __name__ == "__main__":
 
     df = spark.createDataFrame(data, columns)
     df.show()
+
+    #Rename the Mis-Spelled Column
+    df = df.withColumnRenamed("carr", "car")
+    df.show()
