@@ -13,3 +13,10 @@ if __name__ == "__main__":
     df1 = (df.withColumnRenamed("infection_case", "infection_source")
            .select("Province", "city", "infection_source", "confirmed")
            .withColumn("confirmed", Func.col("confirmed").cast("int")))
+
+    # Section 1
+    # Return the TotalConfirmed and MaxFromOneConfirmedCase for each "province","city" pair
+    # Sort the output in asc order on the basis of confirmed
+    result1 = (df1.groupBy("Province", "city").agg(
+            Func.sum("confirmed").alias("TotalConfirmed"),
+            Func.max("confirmed").alias("MaxFromOneConfirmedCase")).orderBy(Func.asc("TotalConfirmed")))
