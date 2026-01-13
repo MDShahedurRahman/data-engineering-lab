@@ -18,3 +18,10 @@ df2 = (df.withColumn("salary", col("salary").cast("long"))
 
 # Write parquet in HDFS
 df2.write.mode("overwrite").format("parquet").save("/user/test/output/department.parquet")
+
+# Output verification
+df2.printSchema()
+df2.show()
+spark.read.parquet("/user/test/output/department.parquet").show()
+
+spark.stop()
