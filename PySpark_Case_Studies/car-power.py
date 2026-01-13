@@ -9,3 +9,6 @@ if __name__ == "__main__":
     ]
 
     columns = ["carr", "horsepower", "weight", "origin"]
+
+    df = spark.createDataFrame(data, columns)
+    df.show()
