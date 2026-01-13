@@ -5,3 +5,6 @@ spark = SparkSession.builder.appName("Employee_Q3").master("local[*]").getOrCrea
 
 # Read the JSON file into a DataFrame
 df = spark.read.json("/user/test/data/employee.json")
+
+# Distinct employees
+dist_df = df.dropDuplicates()
