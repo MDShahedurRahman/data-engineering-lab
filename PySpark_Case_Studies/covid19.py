@@ -20,3 +20,17 @@ if __name__ == "__main__":
     result1 = (df1.groupBy("Province", "city").agg(
             Func.sum("confirmed").alias("TotalConfirmed"),
             Func.max("confirmed").alias("MaxFromOneConfirmedCase")).orderBy(Func.asc("TotalConfirmed")))
+
+    print("\nSection 1 Output")
+    df1.printSchema()
+    result1.show(truncate=False)
+
+    # Section 2
+    # Return the top 2 provinces on the basis of confirmed cases.
+    result2 = (df1.groupBy("Province").agg(Func.sum("confirmed").alias("TotalConfirmed"))
+        .orderBy(Func.desc("TotalConfirmed"))
+        .limit(2)
+    )
+
+    print("\nSection 2 Output (Top 2 Provinces)")
+    result2.show(truncate=False)
