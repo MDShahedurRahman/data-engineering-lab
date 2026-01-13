@@ -10,3 +10,8 @@ df = (spark.read
       .option("sep", ",")
       .csv("/user/test/data/Department.txt")
       .toDF("dept_name", "dept_id", "salary"))
+
+
+# Cast salary to long type and add doubleSalary column with twice the salary value
+df2 = (df.withColumn("salary", col("salary").cast("long"))
+         .withColumn("doubleSalary", (col("salary") * 2).cast("long")))
