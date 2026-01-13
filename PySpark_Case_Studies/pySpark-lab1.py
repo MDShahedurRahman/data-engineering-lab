@@ -15,3 +15,6 @@ df = (spark.read
 # Cast salary to long type and add doubleSalary column with twice the salary value
 df2 = (df.withColumn("salary", col("salary").cast("long"))
          .withColumn("doubleSalary", (col("salary") * 2).cast("long")))
+
+# Write parquet in HDFS
+df2.write.mode("overwrite").format("parquet").save("/user/test/output/department.parquet")
