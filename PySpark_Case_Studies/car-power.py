@@ -16,3 +16,7 @@ if __name__ == "__main__":
     #Rename the Mis-Spelled Column
     df = df.withColumnRenamed("carr", "car")
     df.show()
+
+    #Add Constant Column AvgWeight = 200
+    df = df.withColumn("AvgWeight", lit(200))
+    df.show()
