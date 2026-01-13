@@ -34,3 +34,14 @@ if __name__ == "__main__":
 
     print("\nSection 2 Output (Top 2 Provinces)")
     result2.show(truncate=False)
+
+
+    # Section 3
+    # Return the details only for ‘Daegu’ as province name where confirmed cases are more than 10
+    # Select the columns other than latitude, longitude and case_id
+    result3 = (df1.filter((Func.col("Province") == "Daegu") & (Func.col("confirmed") > 10))
+        .select([c for c in df1.columns if c not in {"latitude", "longitude", "case_id"}]))
+
+    print("\nSection 3 Output")
+    result3.show(truncate=False)
+
