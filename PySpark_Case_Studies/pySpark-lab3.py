@@ -11,3 +11,6 @@ dist_df = df.dropDuplicates()
 
 # Write ORC partitioned by department
 dist_df.write.mode("overwrite").format("orc").partitionBy("department").save("/user/test/output/employee_orc_partByDept")
+
+# Mean salary by department
+df1 = (dist_df.groupBy("department").agg(avg(col("salary")).alias("mean_salary")).orderBy(col("department").desc()))
