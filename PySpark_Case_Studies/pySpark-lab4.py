@@ -10,3 +10,7 @@ department_df = spark.read.json("/user/data/department.json")
 # join employee and department dataframes
 joined_df = (employee_df.join(department_df, employee_df["emp_dept_id"].cast("int") == department_df["dept_id"], "inner")
             .select(department_df["dept_name"], employee_df["salary"].cast("long").alias("salary")))
+
+# Group by department and calculate maximum salary and total employees
+dept_summary = (joined_df.groupBy("dept_name").agg(spark_max(col("salary")).alias("maxSalary"),
+                     count("*").alias("employeesCount")))
