@@ -21,3 +21,8 @@ spark.sql("DROP TABLE IF EXISTS zipcodes_part")
 
 # Hive SQL in PySpark
 result = spark.sql("SELECT * FROM zipcodes_part WHERE state <> 'AL' AND city  <> 'SPRINGVILLE'")
+
+# Show result to verify
+result.show(truncate=False)
+
+spark.stop()
