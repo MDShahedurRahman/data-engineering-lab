@@ -13,3 +13,4 @@ sample_size_df = df.sample(withReplacement=False, fraction=0.5, seed=42)
 # Create and use database
 spark.sql("CREATE DATABASE IF NOT EXISTS zipcodes")
 spark.sql("USE zipcodes")
+spark.sql("DROP TABLE IF EXISTS zipcodes_part")
