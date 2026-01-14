@@ -20,3 +20,6 @@ dept_summary = (joined_df.groupBy("dept_name").agg(spark_max(col("salary")).alia
 spark.sql("CREATE DATABASE IF NOT EXISTS employer")
 spark.sql("USE employer")
 spark.sql("DROP TABLE IF EXISTS part_department")
+
+# Save results to partitioned Hive table as Parquet
+(dept_summary.write.mode("overwrite").format("parquet").partitionBy("dept_name").saveAsTable("part_department"))
