@@ -9,3 +9,6 @@ df = (spark.read.option("header", "true").option("inferSchema", "true")
 
 # 50% sample data
 sample_size_df = df.sample(withReplacement=False, fraction=0.5, seed=42)
+
+# Create and use database
+spark.sql("CREATE DATABASE IF NOT EXISTS zipcodes")
