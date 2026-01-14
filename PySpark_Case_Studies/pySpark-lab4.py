@@ -23,3 +23,8 @@ spark.sql("DROP TABLE IF EXISTS part_department")
 
 # Save results to partitioned Hive table as Parquet
 (dept_summary.write.mode("overwrite").format("parquet").partitionBy("dept_name").saveAsTable("part_department"))
+
+# Output verification
+spark.sql("SELECT dept_name, maxSalary, employeesCount FROM part_department").show()
+
+spark.stop()
