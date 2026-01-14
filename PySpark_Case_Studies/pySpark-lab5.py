@@ -14,3 +14,7 @@ sample_size_df = df.sample(withReplacement=False, fraction=0.5, seed=42)
 spark.sql("CREATE DATABASE IF NOT EXISTS zipcodes")
 spark.sql("USE zipcodes")
 spark.sql("DROP TABLE IF EXISTS zipcodes_part")
+
+# Repartition data to enforce max records per file within state and city partitions
+(sample_size_df.repartition(col("state"), col("city")).write.mode("overwrite").format("parquet")
+ .option("maxRecordsPerFile", 3).partitionBy("state", "city").saveAsTable("zipcodes_part"))
