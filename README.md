@@ -38,7 +38,7 @@ Depending on the lab, you may see:
 - Hadoop / Hive
 - Airflow
 - Kafka
-- Cloud storage (S3 or equivalent)
+- AWS S3 (Cloud storage)
 
 ## Prerequisites
 
