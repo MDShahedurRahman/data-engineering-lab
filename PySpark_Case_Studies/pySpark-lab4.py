@@ -14,3 +14,7 @@ joined_df = (employee_df.join(department_df, employee_df["emp_dept_id"].cast("in
 # Group by department and calculate maximum salary and total employees
 dept_summary = (joined_df.groupBy("dept_name").agg(spark_max(col("salary")).alias("maxSalary"),
                      count("*").alias("employeesCount")))
+
+
+# Create and use database
+spark.sql("CREATE DATABASE IF NOT EXISTS employer")
