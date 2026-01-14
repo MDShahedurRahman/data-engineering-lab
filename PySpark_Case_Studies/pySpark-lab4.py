@@ -18,3 +18,4 @@ dept_summary = (joined_df.groupBy("dept_name").agg(spark_max(col("salary")).alia
 
 # Create and use database
 spark.sql("CREATE DATABASE IF NOT EXISTS employer")
+spark.sql("USE employer")
