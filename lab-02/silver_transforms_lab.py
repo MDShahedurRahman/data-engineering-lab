@@ -81,6 +81,21 @@ def silver_sales_transform(spark):
     # Read data from the bronze sales table
     df = spark.table("bronze_sales")
 
+    # Clean and standardize sales data
+    clean_df = (
+        df.withColumn("sale_id", col("sale_id").cast("int"))  # Cast sale_id to integer
+        .withColumn("product_id", col("product_id").cast("int"))  # Cast product_id to integer
+        .withColumn("customer_id", col("customer_id").cast("int"))  # Cast customer_id to integer
+        .withColumn("store_id", col("store_id").cast("int"))  # Cast store_id to integer
+        .withColumn("quantity", col("quantity").cast("int"))  # Cast quantity to integer
+        .withColumn("sale_date", to_date(col("sale_date")))  # Convert sale_date to date type
+        .dropna(subset=[  # Remove rows with critical null values
+            "sale_id", "product_id", "customer_id",
+            "store_id", "sale_date", "quantity"
+        ])
+        .dropDuplicates(["sale_id"])  # Deduplicate by sale_id
+    )
+
     # Return created table name
     return "silver_sales"
 
