@@ -1,6 +1,13 @@
 from pyspark.sql import SparkSession
 
 def bronze_ingestion(spark, csv_path, table_name):
+    # Read the CSV file into a Spark DataFrame
+    # header=true tells Spark that the first row contains column names
+    df = (
+        spark.read
+        .option("header", "true")
+        .csv(csv_path)
+    )
 
     # Return the name of the created bronze table
     return f"bronze_{table_name}"
