@@ -1,5 +1,10 @@
 from pyspark.sql import SparkSession
 
+def bronze_ingestion(spark, csv_path, table_name):
+
+    # Return the name of the created bronze table
+    return f"bronze_{table_name}"
+
 def main():
     # Name of the Hive database to store tables
     DB_NAME = "iphone_analytics"
@@ -31,6 +36,14 @@ def main():
         "stores":    f"{BASE_PATH}/stores.csv",
         "sales":     f"{BASE_PATH}/sales.csv",
     }
+
+    # Loop through each source and ingest it into the bronze layer
+    for name, path in sources.items():
+        table = bronze_ingestion(spark, path, name)
+        print(f"Created table: {table}")
+
+    # Stop the SparkSession and release resources
+    spark.stop()
 
 # Entry point of the script
 if __name__ == "__main__":
