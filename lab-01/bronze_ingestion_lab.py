@@ -21,6 +21,9 @@ def main():
     # Create the database if it does not already exist
     spark.sql(f"CREATE DATABASE IF NOT EXISTS {DB_NAME}")
 
+    # Set the current database context
+    spark.sql(f"USE {DB_NAME}")
+
 # Entry point of the script
 if __name__ == "__main__":
     main()
