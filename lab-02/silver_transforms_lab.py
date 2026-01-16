@@ -56,6 +56,16 @@ def silver_stores_transform(spark):
     # Read data from the bronze stores table
     df = spark.table("bronze_stores")
 
+    # Clean and standardize store data
+    clean_df = (
+        df.withColumn("store_id", col("store_id").cast("int"))  # Cast store_id to integer
+        .withColumn("store_name", trim(col("store_name")))  # Trim store name
+        .withColumn("city", trim(col("city")))  # Clean city field
+        .withColumn("state", trim(col("state")))  # Clean state field
+        .dropna(subset=["store_id"])  # Remove null store_id records
+        .dropDuplicates(["store_id"])  # Deduplicate by store_id
+    )
+
     # Return created table name
     return "silver_stores"
 
