@@ -96,6 +96,16 @@ def silver_sales_transform(spark):
         .dropDuplicates(["sale_id"])  # Deduplicate by sale_id
     )
 
+    # Write cleaned sales data to the silver sales table
+    # Partitioning by sale_date improves query performance on date filters
+    (
+        clean_df.write
+        .mode("overwrite")  # Overwrite existing table
+        .partitionBy("sale_date")  # Partition data by sale_date
+        .format("parquet")  # Store as Parquet
+        .saveAsTable("silver_sales")  # Save as Hive table
+    )
+
     # Return created table name
     return "silver_sales"
 
