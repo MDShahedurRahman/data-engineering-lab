@@ -52,6 +52,13 @@ def silver_products_transform(spark):
     # Return created table name
     return "silver_products"
 
+def silver_stores_transform(spark):
+    # Read data from the bronze stores table
+    df = spark.table("bronze_stores")
+
+    # Return created table name
+    return "silver_stores"
+
 def main():
     # Define the Hive database name
     DB_NAME = "iphone_analytics"
