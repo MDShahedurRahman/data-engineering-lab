@@ -41,6 +41,14 @@ def silver_products_transform(spark):
         .dropDuplicates(["product_id"])  # Deduplicate by product_id
     )
 
+    # Write cleaned data to the silver products table
+    (
+        clean_df.write
+        .mode("overwrite")  # Overwrite existing table
+        .format("parquet")  # Use Parquet storage
+        .saveAsTable("silver_products")  # Save as Hive table
+    )
+
     # Return created table name
     return "silver_products"
 
