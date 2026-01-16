@@ -24,6 +24,14 @@ def main():
     # Set the current working database
     spark.sql(f"USE {DB_NAME}")
 
+    # Map logical table names to their corresponding CSV file paths
+    sources = {
+        "customers": f"{BASE_PATH}/customers.csv",  # Customer data source
+        "products":  f"{BASE_PATH}/products.csv",   # Product data source
+        "stores":    f"{BASE_PATH}/stores.csv",     # Store data source
+        "sales":     f"{BASE_PATH}/sales.csv",      # Sales transaction data source
+    }
+
 
 # Entry point of the Python script
 if __name__ == "__main__":
