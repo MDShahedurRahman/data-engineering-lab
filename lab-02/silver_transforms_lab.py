@@ -66,6 +66,14 @@ def silver_stores_transform(spark):
         .dropDuplicates(["store_id"])  # Deduplicate by store_id
     )
 
+    # Write cleaned data to the silver stores table
+    (
+        clean_df.write
+        .mode("overwrite")  # Overwrite existing table
+        .format("parquet")  # Store as Parquet
+        .saveAsTable("silver_stores")  # Save as Hive table
+    )
+
     # Return created table name
     return "silver_stores"
 
