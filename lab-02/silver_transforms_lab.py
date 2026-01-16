@@ -31,6 +31,16 @@ def silver_products_transform(spark):
     # Read data from the bronze products table
     df = spark.table("bronze_products")
 
+    # Clean and standardize product data
+    clean_df = (
+        df.withColumn("product_id", col("product_id").cast("int"))  # Cast product_id to integer
+        .withColumn("product_name", trim(col("product_name")))  # Trim product name
+        .withColumn("category", trim(col("category")))  # Trim category field
+        .withColumn("unit_price", col("unit_price").cast("int"))  # Cast unit_price to integer
+        .dropna(subset=["product_id"])  # Remove rows with null product_id
+        .dropDuplicates(["product_id"])  # Deduplicate by product_id
+    )
+
     # Return created table name
     return "silver_products"
 
