@@ -9,6 +9,15 @@ def bronze_ingestion(spark, csv_path, table_name):
         .csv(csv_path)
     )
 
+    # Write the DataFrame as a managed Hive table in Parquet format
+    # overwrite mode replaces the table if it already exists
+    (
+        df.write
+        .mode("overwrite")
+        .format("parquet")
+        .saveAsTable(f"bronze_{table_name}")
+    )
+
     # Return the name of the created bronze table
     return f"bronze_{table_name}"
 
