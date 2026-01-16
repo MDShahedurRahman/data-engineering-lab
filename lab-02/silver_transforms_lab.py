@@ -16,6 +16,14 @@ def silver_customers_transform(spark):
         .dropDuplicates(["customer_id"])  # Deduplicate by customer_id
     )
 
+    # Write cleaned data to the silver customers table in Parquet format
+    (
+        clean_df.write
+        .mode("overwrite")  # Overwrite existing silver table
+        .format("parquet")  # Store data as Parquet
+        .saveAsTable("silver_customers")  # Save as Hive-managed table
+    )
+
     # Return created table name
     return "silver_customers"
 
