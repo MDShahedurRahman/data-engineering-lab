@@ -9,23 +9,24 @@ def silver_customers_transform(spark):
     # Clean and standardize customer data
     clean_df = (
         df.withColumn("customer_id", col("customer_id").cast("int"))  # Cast customer_id to integer
-        .withColumn("customer_name", trim(col("customer_name")))  # Remove extra spaces from name
-        .withColumn("city", trim(col("city")))  # Clean city field
-        .withColumn("state", trim(col("state")))  # Clean state field
-        .dropna(subset=["customer_id"])  # Remove records with null customer_id
-        .dropDuplicates(["customer_id"])  # Deduplicate by customer_id
+          .withColumn("customer_name", trim(col("customer_name")))    # Remove extra spaces from name
+          .withColumn("city", trim(col("city")))                      # Clean city field
+          .withColumn("state", trim(col("state")))                    # Clean state field
+          .dropna(subset=["customer_id"])                              # Remove records with null customer_id
+          .dropDuplicates(["customer_id"])                             # Deduplicate by customer_id
     )
 
     # Write cleaned data to the silver customers table in Parquet format
     (
         clean_df.write
-        .mode("overwrite")  # Overwrite existing silver table
-        .format("parquet")  # Store data as Parquet
-        .saveAsTable("silver_customers")  # Save as Hive-managed table
+        .mode("overwrite")                 # Overwrite existing silver table
+        .format("parquet")                 # Store data as Parquet
+        .saveAsTable("silver_customers")   # Save as Hive-managed table
     )
 
     # Return created table name
     return "silver_customers"
+
 
 def silver_products_transform(spark):
     # Read data from the bronze products table
@@ -33,24 +34,25 @@ def silver_products_transform(spark):
 
     # Clean and standardize product data
     clean_df = (
-        df.withColumn("product_id", col("product_id").cast("int"))  # Cast product_id to integer
-        .withColumn("product_name", trim(col("product_name")))  # Trim product name
-        .withColumn("category", trim(col("category")))  # Trim category field
-        .withColumn("unit_price", col("unit_price").cast("int"))  # Cast unit_price to integer
-        .dropna(subset=["product_id"])  # Remove rows with null product_id
-        .dropDuplicates(["product_id"])  # Deduplicate by product_id
+        df.withColumn("product_id", col("product_id").cast("int"))     # Cast product_id to integer
+          .withColumn("product_name", trim(col("product_name")))       # Trim product name
+          .withColumn("category", trim(col("category")))               # Trim category field
+          .withColumn("unit_price", col("unit_price").cast("int"))     # Cast unit_price to integer
+          .dropna(subset=["product_id"])                                # Remove rows with null product_id
+          .dropDuplicates(["product_id"])                               # Deduplicate by product_id
     )
 
     # Write cleaned data to the silver products table
     (
         clean_df.write
-        .mode("overwrite")  # Overwrite existing table
-        .format("parquet")  # Use Parquet storage
+        .mode("overwrite")               # Overwrite existing table
+        .format("parquet")               # Use Parquet storage
         .saveAsTable("silver_products")  # Save as Hive table
     )
 
     # Return created table name
     return "silver_products"
+
 
 def silver_stores_transform(spark):
     # Read data from the bronze stores table
@@ -58,24 +60,25 @@ def silver_stores_transform(spark):
 
     # Clean and standardize store data
     clean_df = (
-        df.withColumn("store_id", col("store_id").cast("int"))  # Cast store_id to integer
-        .withColumn("store_name", trim(col("store_name")))  # Trim store name
-        .withColumn("city", trim(col("city")))  # Clean city field
-        .withColumn("state", trim(col("state")))  # Clean state field
-        .dropna(subset=["store_id"])  # Remove null store_id records
-        .dropDuplicates(["store_id"])  # Deduplicate by store_id
+        df.withColumn("store_id", col("store_id").cast("int"))     # Cast store_id to integer
+          .withColumn("store_name", trim(col("store_name")))       # Trim store name
+          .withColumn("city", trim(col("city")))                   # Clean city field
+          .withColumn("state", trim(col("state")))                 # Clean state field
+          .dropna(subset=["store_id"])                              # Remove null store_id records
+          .dropDuplicates(["store_id"])                             # Deduplicate by store_id
     )
 
     # Write cleaned data to the silver stores table
     (
         clean_df.write
-        .mode("overwrite")  # Overwrite existing table
-        .format("parquet")  # Store as Parquet
+        .mode("overwrite")             # Overwrite existing table
+        .format("parquet")             # Store as Parquet
         .saveAsTable("silver_stores")  # Save as Hive table
     )
 
     # Return created table name
     return "silver_stores"
+
 
 def silver_sales_transform(spark):
     # Read data from the bronze sales table
@@ -83,31 +86,32 @@ def silver_sales_transform(spark):
 
     # Clean and standardize sales data
     clean_df = (
-        df.withColumn("sale_id", col("sale_id").cast("int"))  # Cast sale_id to integer
-        .withColumn("product_id", col("product_id").cast("int"))  # Cast product_id to integer
-        .withColumn("customer_id", col("customer_id").cast("int"))  # Cast customer_id to integer
-        .withColumn("store_id", col("store_id").cast("int"))  # Cast store_id to integer
-        .withColumn("quantity", col("quantity").cast("int"))  # Cast quantity to integer
-        .withColumn("sale_date", to_date(col("sale_date")))  # Convert sale_date to date type
-        .dropna(subset=[  # Remove rows with critical null values
-            "sale_id", "product_id", "customer_id",
-            "store_id", "sale_date", "quantity"
-        ])
-        .dropDuplicates(["sale_id"])  # Deduplicate by sale_id
+        df.withColumn("sale_id", col("sale_id").cast("int"))             # Cast sale_id to integer
+          .withColumn("product_id", col("product_id").cast("int"))       # Cast product_id to integer
+          .withColumn("customer_id", col("customer_id").cast("int"))     # Cast customer_id to integer
+          .withColumn("store_id", col("store_id").cast("int"))           # Cast store_id to integer
+          .withColumn("quantity", col("quantity").cast("int"))           # Cast quantity to integer
+          .withColumn("sale_date", to_date(col("sale_date")))            # Convert sale_date to date type
+          .dropna(subset=[                                                 # Remove rows with critical null values
+              "sale_id", "product_id", "customer_id",
+              "store_id", "sale_date", "quantity"
+          ])
+          .dropDuplicates(["sale_id"])                                    # Deduplicate by sale_id
     )
 
     # Write cleaned sales data to the silver sales table
     # Partitioning by sale_date improves query performance on date filters
     (
         clean_df.write
-        .mode("overwrite")  # Overwrite existing table
-        .partitionBy("sale_date")  # Partition data by sale_date
-        .format("parquet")  # Store as Parquet
-        .saveAsTable("silver_sales")  # Save as Hive table
+        .mode("overwrite")               # Overwrite existing table
+        .partitionBy("sale_date")        # Partition data by sale_date
+        .format("parquet")               # Store as Parquet
+        .saveAsTable("silver_sales")     # Save as Hive table
     )
 
     # Return created table name
     return "silver_sales"
+
 
 def main():
     # Define the Hive database name
