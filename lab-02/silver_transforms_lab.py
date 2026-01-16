@@ -6,6 +6,16 @@ def silver_customers_transform(spark):
     # Read data from the bronze customers table
     df = spark.table("bronze_customers")
 
+    # Clean and standardize customer data
+    clean_df = (
+        df.withColumn("customer_id", col("customer_id").cast("int"))  # Cast customer_id to integer
+        .withColumn("customer_name", trim(col("customer_name")))  # Remove extra spaces from name
+        .withColumn("city", trim(col("city")))  # Clean city field
+        .withColumn("state", trim(col("state")))  # Clean state field
+        .dropna(subset=["customer_id"])  # Remove records with null customer_id
+        .dropDuplicates(["customer_id"])  # Deduplicate by customer_id
+    )
+
     # Return created table name
     return "silver_customers"
 
