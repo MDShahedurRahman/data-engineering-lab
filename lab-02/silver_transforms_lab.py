@@ -1,6 +1,14 @@
 from pyspark.sql import SparkSession                      # Spark entry point
 from pyspark.sql.functions import col, to_date, trim     # Common Spark SQL functions
 
+
+def silver_customers_transform(spark):
+    # Read data from the bronze customers table
+    df = spark.table("bronze_customers")
+
+    # Return created table name
+    return "silver_customers"
+
 def main():
     # Define the Hive database name
     DB_NAME = "iphone_analytics"
