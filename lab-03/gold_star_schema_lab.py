@@ -131,6 +131,11 @@ def load_dim_date(spark):
     )
 
 
+def load_fact_sales(spark):
+    # Read sales data from silver layer
+    sales = spark.table("silver_sales")
+
+
 def main():
     # Hive database name
     DB_NAME = "iphone_analytics"
