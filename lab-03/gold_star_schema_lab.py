@@ -6,6 +6,9 @@ def main():
     # Hive database name
     DB_NAME = "iphone_analytics"
 
+    # Read product data to calculate total sales amount
+    products = spark.table("silver_products")
+
 # Script entry point
 if __name__ == "__main__":
     main()
