@@ -122,6 +122,14 @@ def load_dim_date(spark):
              .select("date_key", "year", "month", "day")   # Final column selection
     )
 
+    # Load data into date dimension table
+    (
+        dim_date_df.write
+        .mode("overwrite")          # Overwrite existing data
+        .format("parquet")          # Store as Parquet
+        .saveAsTable("dim_date")    # Save to dim_date table
+    )
+
 
 def main():
     # Hive database name
