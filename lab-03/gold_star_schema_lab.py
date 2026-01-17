@@ -135,6 +135,9 @@ def load_fact_sales(spark):
     # Read sales data from silver layer
     sales = spark.table("silver_sales")
 
+    # Read product data to calculate total sales amount
+    products = spark.table("silver_products")
+
 
 def main():
     # Hive database name
