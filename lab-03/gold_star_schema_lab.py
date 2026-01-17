@@ -2,6 +2,19 @@ from pyspark.sql import SparkSession                             # Spark entry p
 from pyspark.sql.functions import col, year, month, dayofmonth   # Date and column functions
 
 
+def create_gold_tables(spark):
+    # Create customer dimension table if it does not already exist
+    spark.sql("""
+        CREATE TABLE IF NOT EXISTS dim_customer (
+          customer_id INT,
+          customer_name STRING,
+          city STRING,
+          state STRING
+        )
+        STORED AS PARQUET
+    """)
+
+
 def main():
     # Hive database name
     DB_NAME = "iphone_analytics"
