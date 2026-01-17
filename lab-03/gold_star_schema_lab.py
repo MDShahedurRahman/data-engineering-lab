@@ -98,6 +98,14 @@ def load_dim_store(spark):
         "store_id", "store_name", "city", "state"
     )
 
+    # Load data into store dimension table
+    (
+        df.write
+        .mode("overwrite")           # Overwrite existing data
+        .format("parquet")           # Store as Parquet
+        .saveAsTable("dim_store")    # Save to dim_store table
+    )
+
 
 def main():
     # Hive database name
