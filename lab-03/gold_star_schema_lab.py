@@ -138,6 +138,22 @@ def load_fact_sales(spark):
     # Read product data to calculate total sales amount
     products = spark.table("silver_products")
 
+    # Join sales with products and calculate total_amount
+    fact_df = (
+        sales.join(products, "product_id")                 # Join on product_id
+             .withColumn("total_amount",                   # Calculate revenue per sale
+                         col("quantity") * col("unit_price"))
+             .select(
+                    "sale_id",
+                    "customer_id",
+                    "product_id",
+                    "store_id",
+                    col("sale_date").alias("date_key"),    # Rename sale_date for partitioning
+                    "quantity",
+                    "total_amount"
+        )
+    )
+
 
 def main():
     # Hive database name
