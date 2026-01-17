@@ -16,51 +16,50 @@ def create_gold_tables(spark):
 
     # Create product dimension table
     spark.sql("""
-              CREATE TABLE IF NOT EXISTS dim_product
-              (
-                  product_id
-                  INT,
-                  product_name
-                  STRING,
-                  category
-                  STRING,
-                  unit_price
-                  INT
-              )
-                  STORED AS PARQUET
-              """)
+        CREATE TABLE IF NOT EXISTS dim_product (
+          product_id INT,
+          product_name STRING,
+          category STRING,
+          unit_price INT
+        )
+        STORED AS PARQUET
+    """)
 
     # Create store dimension table
     spark.sql("""
-              CREATE TABLE IF NOT EXISTS dim_store
-              (
-                  store_id
-                  INT,
-                  store_name
-                  STRING,
-                  city
-                  STRING,
-                  state
-                  STRING
-              )
-                  STORED AS PARQUET
-              """)
+        CREATE TABLE IF NOT EXISTS dim_store (
+          store_id INT,
+          store_name STRING,
+          city STRING,
+          state STRING
+        )
+        STORED AS PARQUET
+    """)
 
     # Create date dimension table
     spark.sql("""
-              CREATE TABLE IF NOT EXISTS dim_date
-              (
-                  date_key
-                  DATE,
-                  year
-                  INT,
-                  month
-                  INT,
-                  day
-                  INT
-              )
-                  STORED AS PARQUET
-              """)
+        CREATE TABLE IF NOT EXISTS dim_date (
+          date_key DATE,
+          year INT,
+          month INT,
+          day INT
+        )
+        STORED AS PARQUET
+    """)
+
+    # Create sales fact table partitioned by date_key
+    spark.sql("""
+        CREATE TABLE IF NOT EXISTS fact_sales (
+          sale_id INT,
+          customer_id INT,
+          product_id INT,
+          store_id INT,
+          quantity INT,
+          total_amount INT
+        )
+        PARTITIONED BY (date_key DATE)
+        STORED AS PARQUET
+    """)
 
 
 def main():
