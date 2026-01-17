@@ -14,6 +14,22 @@ def create_gold_tables(spark):
         STORED AS PARQUET
     """)
 
+    # Create product dimension table
+    spark.sql("""
+              CREATE TABLE IF NOT EXISTS dim_product
+              (
+                  product_id
+                  INT,
+                  product_name
+                  STRING,
+                  category
+                  STRING,
+                  unit_price
+                  INT
+              )
+                  STORED AS PARQUET
+              """)
+
 
 def main():
     # Hive database name
