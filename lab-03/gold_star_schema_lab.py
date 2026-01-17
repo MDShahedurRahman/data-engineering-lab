@@ -18,6 +18,9 @@ def main():
     # Set active database
     spark.sql(f"USE {DB_NAME}")
 
+    # Create gold-layer dimension and fact tables
+    create_gold_tables(spark)
+
 # Script entry point
 if __name__ == "__main__":
     main()
