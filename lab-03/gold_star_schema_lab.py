@@ -130,6 +130,7 @@ def main():
     load_dim_customer(spark)
     load_dim_product(spark)
     load_dim_store(spark)
+    load_dim_date(spark)
 
 # Script entry point
 if __name__ == "__main__":
