@@ -111,6 +111,17 @@ def load_dim_date(spark):
     # Read sales data from silver layer
     sales = spark.table("silver_sales")
 
+    # Build date dimension from unique sale dates
+    dim_date_df = (
+        sales.select(col("sale_date").alias("date_key"))   # Rename sale_date to date_key
+             .dropna(subset=["date_key"])                  # Remove null dates
+             .dropDuplicates(["date_key"])                 # Keep unique dates only
+             .withColumn("year", year(col("date_key")))    # Extract year
+             .withColumn("month", month(col("date_key")))  # Extract month
+             .withColumn("day", dayofmonth(col("date_key")))  # Extract day
+             .select("date_key", "year", "month", "day")   # Final column selection
+    )
+
 
 def main():
     # Hive database name
