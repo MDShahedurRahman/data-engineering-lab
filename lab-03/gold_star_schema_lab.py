@@ -15,6 +15,9 @@ def main():
         .getOrCreate()  # Create or reuse SparkSession
     )
 
+    # Set active database
+    spark.sql(f"USE {DB_NAME}")
+
 # Script entry point
 if __name__ == "__main__":
     main()
