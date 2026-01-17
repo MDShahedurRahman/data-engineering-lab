@@ -62,6 +62,13 @@ def create_gold_tables(spark):
     """)
 
 
+def load_dim_customer(spark):
+    # Read cleaned customer data from silver layer
+    df = spark.table("silver_customers").select(
+        "customer_id", "customer_name", "city", "state"
+    )
+
+
 def main():
     # Hive database name
     DB_NAME = "iphone_analytics"
