@@ -77,6 +77,13 @@ def load_dim_customer(spark):
     )
 
 
+def load_dim_product(spark):
+    # Read cleaned product data from silver layer
+    df = spark.table("silver_products").select(
+        "product_id", "product_name", "category", "unit_price"
+    )
+
+
 def main():
     # Hive database name
     DB_NAME = "iphone_analytics"
