@@ -46,6 +46,22 @@ def create_gold_tables(spark):
                   STORED AS PARQUET
               """)
 
+    # Create date dimension table
+    spark.sql("""
+              CREATE TABLE IF NOT EXISTS dim_date
+              (
+                  date_key
+                  DATE,
+                  year
+                  INT,
+                  month
+                  INT,
+                  day
+                  INT
+              )
+                  STORED AS PARQUET
+              """)
+
 
 def main():
     # Hive database name
