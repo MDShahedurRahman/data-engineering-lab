@@ -81,6 +81,9 @@ def main():
     # Create gold-layer dimension and fact tables
     create_gold_tables(spark)
 
+    # Load dimension tables
+    load_dim_customer(spark)
+
 # Script entry point
 if __name__ == "__main__":
     main()
