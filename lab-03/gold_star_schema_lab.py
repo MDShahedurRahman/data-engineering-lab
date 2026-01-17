@@ -83,6 +83,14 @@ def load_dim_product(spark):
         "product_id", "product_name", "category", "unit_price"
     )
 
+    # Load data into product dimension table
+    (
+        df.write
+        .mode("overwrite")            # Replace existing data
+        .format("parquet")            # Use Parquet format
+        .saveAsTable("dim_product")   # Save to dim_product table
+    )
+
 
 def main():
     # Hive database name
