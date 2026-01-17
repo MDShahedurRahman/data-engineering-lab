@@ -156,6 +156,9 @@ def main():
     load_dim_store(spark)
     load_dim_date(spark)
 
+    # Load fact table
+    load_fact_sales(spark)
+
 # Script entry point
 if __name__ == "__main__":
     main()
