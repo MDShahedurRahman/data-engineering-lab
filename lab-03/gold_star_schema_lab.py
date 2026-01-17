@@ -25,6 +25,15 @@ def main():
         )
     )
 
+    # Load data into fact_sales table partitioned by date
+    (
+        fact_df.write
+        .mode("overwrite")  # Replace existing fact data
+        .partitionBy("date_key")  # Partition for efficient date-based queries
+        .format("parquet")  # Store as Parquet
+        .saveAsTable("fact_sales")  # Save to fact_sales table
+    )
+
 # Script entry point
 if __name__ == "__main__":
     main()
