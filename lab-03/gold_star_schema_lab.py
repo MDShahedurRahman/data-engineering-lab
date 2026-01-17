@@ -171,10 +171,10 @@ def main():
     # Create SparkSession with Hive support
     spark = (
         SparkSession.builder
-        .master("local[*]")  # Use all available local cores
-        .appName("iphone-gold-layer")  # Application name
-        .enableHiveSupport()  # Enable Hive support
-        .getOrCreate()  # Create or reuse SparkSession
+        .master("local[*]")                 # Use all available local cores
+        .appName("iphone-gold-layer")       # Application name
+        .enableHiveSupport()                # Enable Hive support
+        .getOrCreate()                      # Create or reuse SparkSession
     )
 
     # Set active database
@@ -191,6 +191,13 @@ def main():
 
     # Load fact table
     load_fact_sales(spark)
+
+    # Log successful completion
+    print("Gold layer completed: all dims and fact_sales created and loaded.")
+
+    # Stop SparkSession and release resources
+    spark.stop()
+
 
 # Script entry point
 if __name__ == "__main__":
