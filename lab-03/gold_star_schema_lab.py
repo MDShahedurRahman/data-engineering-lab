@@ -68,6 +68,14 @@ def load_dim_customer(spark):
         "customer_id", "customer_name", "city", "state"
     )
 
+    # Load data into customer dimension table
+    (
+        df.write
+        .mode("overwrite")             # Replace existing data
+        .format("parquet")             # Store as Parquet
+        .saveAsTable("dim_customer")   # Save to dim_customer table
+    )
+
 
 def main():
     # Hive database name
