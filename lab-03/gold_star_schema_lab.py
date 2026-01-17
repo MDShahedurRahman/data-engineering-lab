@@ -30,6 +30,22 @@ def create_gold_tables(spark):
                   STORED AS PARQUET
               """)
 
+    # Create store dimension table
+    spark.sql("""
+              CREATE TABLE IF NOT EXISTS dim_store
+              (
+                  store_id
+                  INT,
+                  store_name
+                  STRING,
+                  city
+                  STRING,
+                  state
+                  STRING
+              )
+                  STORED AS PARQUET
+              """)
+
 
 def main():
     # Hive database name
