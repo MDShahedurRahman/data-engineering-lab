@@ -114,6 +114,7 @@ def main():
     # Load dimension tables
     load_dim_customer(spark)
     load_dim_product(spark)
+    load_dim_store(spark)
 
 # Script entry point
 if __name__ == "__main__":
